@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FinSmart – Smart Financial Literacy for Youth</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#060d1f;--surface:#0d1530;--card:#111f3d;--border:#1e2f55;--accent:#00e5aa;--accent2:#7c3aed;--accent3:#f59e0b;--danger:#f43f5e;--text:#eef2ff;--muted:#7b8db0;--success:#10b981;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+.page{display:none;min-height:100vh;}
+.page.active{display:flex;}
+/* LANDING */
+#page-landing{flex-direction:column;background:var(--bg);position:relative;overflow:hidden;}
+.orb{position:fixed;border-radius:50%;filter:blur(130px);opacity:.3;pointer-events:none;}
+.orb1{width:600px;height:600px;background:radial-gradient(circle,#00e5aa,transparent);top:-200px;right:-100px;}
+.orb2{width:500px;height:500px;background:radial-gradient(circle,#7c3aed,transparent);bottom:-100px;left:-100px;}
+.land-nav{position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:22px 56px;border-bottom:1px solid rgba(255,255,255,.06);}
+.logo{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--accent);}
+.logo span{color:var(--text);}
+.btn-nav-go{background:var(--accent);color:#060d1f;border:none;padding:10px 22px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .2s;}
+.btn-nav-go:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,229,170,.3);}
+.btn-nav-link{background:none;border:none;color:var(--muted);padding:10px 16px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.9rem;cursor:pointer;transition:all .2s;margin-right:4px;}
+.btn-nav-link:hover{color:var(--text);background:rgba(255,255,255,.06);}
+.hero{position:relative;z-index:5;text-align:center;padding:100px 60px 70px;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,229,170,.1);border:1px solid rgba(0,229,170,.25);border-radius:100px;padding:8px 20px;font-size:.8rem;font-weight:600;color:var(--accent);margin-bottom:30px;}
+.hero h1{font-family:'Syne',sans-serif;font-size:4rem;font-weight:800;line-height:1.1;margin-bottom:22px;max-width:800px;margin-left:auto;margin-right:auto;}
+.hero h1 .grad{background:linear-gradient(135deg,var(--accent),#00b4d8,var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero p{font-size:1.1rem;color:var(--muted);max-width:540px;margin:0 auto 40px;line-height:1.7;}
+.hero-ctas{display:flex;gap:14px;justify-content:center;}
+.btn-primary-hero{background:linear-gradient(135deg,var(--accent),#00b4d8);color:#060d1f;border:none;padding:15px 34px;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;transition:all .2s;box-shadow:0 4px 20px rgba(0,229,170,.25);}
+.btn-primary-hero:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,229,170,.4);}
+.btn-secondary-hero{background:rgba(255,255,255,.07);color:var(--text);border:1px solid var(--border);padding:15px 34px;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:600;cursor:pointer;transition:all .2s;}
+.btn-secondary-hero:hover{background:rgba(255,255,255,.11);}
+.feat-grid{position:relative;z-index:5;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;padding:0 56px 80px;}
+.feat{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:26px;transition:all .3s;}
+.feat:hover{background:rgba(255,255,255,.07);transform:translateY(-4px);border-color:rgba(0,229,170,.4);}
+.feat-icon{font-size:1.9rem;margin-bottom:14px;}
+.feat-title{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:7px;}
+.feat-desc{color:var(--muted);font-size:.83rem;line-height:1.6;}
+/* AUTH */
+#page-login,#page-signup{flex-direction:row;}
+.auth-left{width:52%;background:linear-gradient(150deg,#0a1628,#0d2040 50%,#0a2218);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:60px;position:relative;overflow:hidden;}
+.auth-left::before{content:'';position:absolute;width:450px;height:450px;background:radial-gradient(circle,rgba(0,229,170,.13),transparent);top:-120px;right:-80px;border-radius:50%;}
+.auth-left::after{content:'';position:absolute;width:350px;height:350px;background:radial-gradient(circle,rgba(124,58,237,.13),transparent);bottom:-70px;left:-60px;border-radius:50%;}
+.auth-brand{position:relative;z-index:2;text-align:center;margin-bottom:48px;}
+.auth-brand .logo{font-size:2.2rem;display:block;margin-bottom:9px;}
+.auth-brand p{color:var(--muted);font-size:.93rem;}
+.auth-stats{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%;max-width:340px;}
+.astat{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:14px;padding:18px;backdrop-filter:blur(12px);}
+.astat .num{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;color:var(--accent);}
+.astat .lbl{color:var(--muted);font-size:.78rem;margin-top:3px;}
+.auth-right{width:48%;background:var(--surface);display:flex;align-items:center;justify-content:center;padding:56px 48px;}
+.auth-form{width:100%;max-width:390px;}
+.auth-form h2{font-family:'Syne',sans-serif;font-size:1.85rem;font-weight:700;margin-bottom:5px;}
+.auth-form .sub{color:var(--muted);margin-bottom:30px;font-size:.88rem;}
+.fg{margin-bottom:16px;}
+.fg label{display:block;font-size:.76rem;font-weight:600;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.6px;}
+.fg input,.fg select{width:100%;background:var(--card);border:1px solid var(--border);border-radius:9px;padding:12px 14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s,box-shadow .2s;}
+.fg input::placeholder{color:var(--muted);}
+.fg input:focus,.fg select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,229,170,.1);}
+.fg select option{background:var(--card);}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.btn-auth{width:100%;background:linear-gradient(135deg,var(--accent),#00b4d8);color:#060d1f;border:none;border-radius:9px;padding:13px;font-family:'DM Sans',sans-serif;font-size:.96rem;font-weight:700;cursor:pointer;transition:all .2s;margin-top:4px;}
+.btn-auth:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,229,170,.3);}
+.auth-switch{text-align:center;margin-top:20px;color:var(--muted);font-size:.86rem;}
+.auth-switch a{color:var(--accent);cursor:pointer;font-weight:600;}
+.divider{display:flex;align-items:center;gap:10px;margin:18px 0;color:var(--muted);font-size:.78rem;}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
+.errmsg{background:rgba(244,63,94,.1);border:1px solid rgba(244,63,94,.28);border-radius:8px;padding:9px 13px;color:var(--danger);font-size:.83rem;margin-bottom:14px;display:none;}
+.errmsg.show{display:block;}
+/* DASHBOARD */
+#page-dashboard{flex-direction:column;}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 26px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.topbar-left{display:flex;align-items:center;gap:28px;}
+.topbar-logo{font-family:'Syne',sans-serif;font-size:1.35rem;font-weight:800;color:var(--accent);}
+.tab-nav{display:flex;gap:3px;}
+.tab-btn{background:none;border:none;color:var(--muted);padding:6px 13px;border-radius:7px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.84rem;font-weight:500;transition:all .2s;}
+.tab-btn:hover{color:var(--text);}
+.tab-btn.active{background:var(--card);color:var(--accent);font-weight:600;}
+.topbar-right{display:flex;align-items:center;gap:12px;}
+.uname{font-size:.86rem;font-weight:600;}
+.urole{font-size:.73rem;color:var(--muted);}
+.avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.82rem;color:#060d1f;}
+.btn-logout{background:rgba(244,63,94,.1);border:1px solid rgba(244,63,94,.22);color:var(--danger);border-radius:7px;padding:6px 13px;font-family:'DM Sans',sans-serif;font-size:.8rem;cursor:pointer;}
+.dash-main{flex:1;padding:26px 30px;overflow-y:auto;}
+.section{display:none;animation:fadeIn .25s ease;}
+.section.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.sec-hdr{margin-bottom:22px;}
+.sec-hdr h2{font-family:'Syne',sans-serif;font-size:1.45rem;font-weight:700;margin-bottom:3px;}
+.sec-hdr p{color:var(--muted);font-size:.85rem;}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;position:relative;overflow:hidden;transition:transform .2s;}
+.kpi:hover{transform:translateY(-2px);}
+.kpi-bar{position:absolute;top:0;left:0;right:0;height:3px;border-radius:14px 14px 0 0;}
+.kpi-bar.g{background:var(--accent);}
+.kpi-bar.p{background:var(--accent2);}
+.kpi-bar.a{background:var(--accent3);}
+.kpi-bar.r{background:var(--danger);}
+.kpi-lbl{font-size:.73rem;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:7px;}
+.kpi-val{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;margin-bottom:3px;}
+.kpi-sub{font-size:.76rem;color:var(--muted);}
+.kpi-ico{position:absolute;top:17px;right:17px;font-size:1.4rem;opacity:.28;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:20px;}
+.card-title{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;}
+.card-title span{font-size:.76rem;color:var(--muted);font-family:'DM Sans',sans-serif;font-weight:400;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.grid32{display:grid;grid-template-columns:2fr 1fr;gap:18px;}
+.chart-bars{display:flex;align-items:flex-end;gap:7px;height:150px;padding-top:8px;}
+.bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;}
+.bar-col{width:100%;border-radius:5px 5px 0 0;transition:height .5s ease;min-height:3px;}
+.bar-col.inc{background:linear-gradient(180deg,var(--accent),rgba(0,229,170,.25));}
+.bar-col.exp{background:linear-gradient(180deg,var(--danger),rgba(244,63,94,.25));}
+.bar-col.sav{background:linear-gradient(180deg,var(--accent2),rgba(124,58,237,.25));}
+.bar-lbl{font-size:.7rem;color:var(--muted);}
+.legend{display:flex;gap:14px;margin-top:12px;flex-wrap:wrap;}
+.leg-i{display:flex;align-items:center;gap:5px;font-size:.76rem;color:var(--muted);}
+.leg-dot{width:7px;height:7px;border-radius:50%;}
+.donut-wrap{display:flex;align-items:center;gap:20px;}
+.donut-labels{flex:1;}
+.donut-item{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;font-size:.8rem;}
+.donut-il{display:flex;align-items:center;gap:7px;}
+.donut-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+.tx-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.tx-item:last-child{border-bottom:none;}
+.tx-ico{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+.tx-info{flex:1;}
+.tx-name{font-size:.85rem;font-weight:500;}
+.tx-cat{font-size:.73rem;color:var(--muted);}
+.tx-amt{font-weight:700;font-size:.87rem;}
+.tx-amt.inc{color:var(--success);}
+.tx-amt.exp{color:var(--danger);}
+.ifield{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 13px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.86rem;outline:none;transition:border-color .2s;}
+.ifield:focus{border-color:var(--accent);}
+.ifield::placeholder{color:var(--muted);}
+.sfield{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 13px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.86rem;outline:none;cursor:pointer;}
+.sfield option{background:var(--card);}
+.flbl{font-size:.75rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;display:block;}
+.fgrp{margin-bottom:12px;}
+.btn-green{background:var(--accent);color:#060d1f;border:none;border-radius:8px;padding:10px 20px;font-family:'DM Sans',sans-serif;font-size:.86rem;font-weight:700;cursor:pointer;transition:all .2s;}
+.btn-green:hover{box-shadow:0 4px 14px rgba(0,229,170,.3);}
+.btn-grey{background:rgba(255,255,255,.07);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:10px 20px;font-family:'DM Sans',sans-serif;font-size:.86rem;cursor:pointer;}
+.prog-item{margin-bottom:14px;}
+.prog-hdr{display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:5px;}
+.prog-bar{height:7px;background:rgba(255,255,255,.08);border-radius:100px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:100px;}
+.predict-box{background:linear-gradient(135deg,rgba(124,58,237,.15),rgba(0,229,170,.08));border:1px solid rgba(124,58,237,.3);border-radius:14px;padding:20px;text-align:center;margin-bottom:18px;}
+.predict-amt{font-family:'Syne',sans-serif;font-size:2.6rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:8px 0;}
+.predict-lbl{color:var(--muted);font-size:.86rem;}
+.budget-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.budget-item:last-child{border-bottom:none;}
+.bcat{flex:1;}
+.bcat-name{font-size:.85rem;font-weight:500;margin-bottom:3px;}
+.bcat-meta{font-size:.72rem;color:var(--muted);}
+.bprog-wrap{flex:2;}
+.b-bar{height:6px;background:rgba(255,255,255,.08);border-radius:100px;overflow:hidden;margin-bottom:3px;}
+.b-fill{height:100%;border-radius:100px;}
+.b-nums{display:flex;justify-content:space-between;font-size:.7rem;color:var(--muted);}
+.goal-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px;}
+.goal-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.goal-name{font-weight:600;font-size:.9rem;}
+.goal-pct{font-family:'Syne',sans-serif;font-weight:800;font-size:.92rem;color:var(--accent);}
+.goal-bar{height:7px;background:rgba(255,255,255,.08);border-radius:100px;overflow:hidden;margin-bottom:7px;}
+.goal-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--accent),var(--accent2));}
+.goal-meta{display:flex;justify-content:space-between;font-size:.73rem;color:var(--muted);}
+.tip-card{background:linear-gradient(135deg,rgba(0,229,170,.07),rgba(124,58,237,.07));border:1px solid rgba(0,229,170,.14);border-radius:13px;padding:18px;margin-bottom:13px;}
+.tip-icon{font-size:1.4rem;margin-bottom:9px;}
+.tip-title{font-family:'Syne',sans-serif;font-weight:700;font-size:.94rem;margin-bottom:5px;}
+.tip-text{color:var(--muted);font-size:.83rem;line-height:1.6;}
+.tip-tag{display:inline-block;background:rgba(0,229,170,.14);color:var(--accent);font-size:.7rem;font-weight:600;padding:3px 9px;border-radius:100px;margin-top:9px;}
+.qa-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px;}
+.qa-btn{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:11px;padding:13px;cursor:pointer;text-align:center;transition:all .2s;font-family:'DM Sans',sans-serif;}
+.qa-btn:hover{background:rgba(0,229,170,.07);border-color:var(--accent);}
+.qa-icon{font-size:1.3rem;margin-bottom:5px;}
+.qa-lbl{font-size:.76rem;color:var(--muted);font-weight:500;}
+.chat-wrap{display:flex;flex-direction:column;height:400px;}
+.chat-msgs{flex:1;overflow-y:auto;padding-right:4px;display:flex;flex-direction:column;gap:10px;margin-bottom:12px;}
+.chat-msgs::-webkit-scrollbar{width:3px;}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+.bubble{max-width:80%;padding:10px 14px;border-radius:13px;font-size:.84rem;line-height:1.55;}
+.bubble.bot{background:rgba(0,229,170,.09);border:1px solid rgba(0,229,170,.18);border-bottom-left-radius:3px;align-self:flex-start;}
+.bubble.user{background:var(--accent2);border-bottom-right-radius:3px;align-self:flex-end;color:#fff;}
+.bubble.typing{background:rgba(255,255,255,.05);border:1px solid var(--border);align-self:flex-start;}
+.chat-row{display:flex;gap:9px;}
+.chat-inp{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:10px 14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.85rem;outline:none;transition:border-color .2s;}
+.chat-inp:focus{border-color:var(--accent);}
+.chat-send{background:var(--accent);color:#060d1f;border:none;border-radius:9px;padding:10px 16px;font-size:1rem;cursor:pointer;}
+.badge{display:inline-block;padding:2px 9px;border-radius:100px;font-size:.7rem;font-weight:600;}
+.badge.g{background:rgba(16,185,129,.14);color:var(--success);}
+.badge.r{background:rgba(244,63,94,.14);color:var(--danger);}
+.badge.a{background:rgba(245,158,11,.14);color:var(--accent3);}
+.toast{position:fixed;bottom:26px;right:26px;background:var(--card);border:1px solid var(--accent);border-radius:11px;padding:12px 18px;display:flex;align-items:center;gap:9px;font-size:.86rem;z-index:1000;transform:translateY(70px);opacity:0;transition:all .3s;max-width:300px;}
+.toast.show{transform:translateY(0);opacity:1;}
+</style>
+</head>
+<body>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+
+<!-- LANDING -->
+<div class="page active" id="page-landing">
+  <nav class="land-nav">
+    <div class="logo">Fin<span>Smart</span></div>
+    <div>
+      <button class="btn-nav-link" onclick="showPage('page-login')">Sign In</button>
+      <button class="btn-nav-go" onclick="showPage('page-signup')">Get Started Free</button>
+    </div>
+  </nav>
+  <section class="hero">
+    <div class="hero-badge">🎓 AI-Powered Financial Literacy for Youth</div>
+    <h1>Master Your Money,<br><span class="grad">Shape Your Future</span></h1>
+    <p>FinSmart uses AI to help young people track spending, build smart budgets, set savings goals and develop lifelong financial habits — all in one beautifully simple app.</p>
+    <div class="hero-ctas">
+      <button class="btn-primary-hero" onclick="showPage('page-signup')">Start for Free →</button>
+      <button class="btn-secondary-hero" onclick="showPage('page-login')">Sign In</button>
+    </div>
+  </section>
+  <div class="feat-grid">
+    <div class="feat"><div class="feat-icon">📊</div><div class="feat-title">Track Spending</div><div class="feat-desc">Log every transaction and visualise where your money really goes with beautiful charts.</div></div>
+    <div class="feat"><div class="feat-icon">🎯</div><div class="feat-title">Smart Budgeting</div><div class="feat-desc">Get AI-powered budget plans tailored to your income and financial goals.</div></div>
+    <div class="feat"><div class="feat-icon">🤖</div><div class="feat-title">AI Financial Coach</div><div class="feat-desc">Ask anything about money. Our AI coach gives personalised guidance 24/7.</div></div>
+    <div class="feat"><div class="feat-icon">🔮</div><div class="feat-title">Savings Predictor</div><div class="feat-desc">See exactly how much you'll save based on your current spending habits.</div></div>
+  </div>
+</div>
+
+<!-- LOGIN -->
+<div class="page" id="page-login">
+  <div class="auth-left">
+    <div class="auth-brand"><span class="logo">FinSmart</span><p>Smart money management for youth</p></div>
+    <div class="auth-stats">
+      <div class="astat"><div class="num">50K+</div><div class="lbl">Young users</div></div>
+      <div class="astat"><div class="num">₹2.4Cr</div><div class="lbl">Saved by users</div></div>
+      <div class="astat"><div class="num">94%</div><div class="lbl">Better habits</div></div>
+      <div class="astat"><div class="num">4.9★</div><div class="lbl">User rating</div></div>
+    </div>
+  </div>
+  <div class="auth-right">
+    <div class="auth-form">
+      <h2>Welcome back 👋</h2>
+      <p class="sub">Sign in to continue your financial journey</p>
+      <div class="errmsg" id="login-err">Invalid email or password. Please try again.</div>
+      <div class="fg"><label>Email Address</label><input type="email" id="li-email" placeholder="your@email.com"></div>
+      <div class="fg"><label>Password</label><input type="password" id="li-pass" placeholder="••••••••"></div>
+      <button class="btn-auth" onclick="doLogin()">Sign In to FinSmart</button>
+      <div class="divider">or</div>
+      <button class="btn-auth" style="background:rgba(255,255,255,.07);color:var(--text);border:1px solid var(--border);" onclick="demoLogin()">🚀 Try Demo Account</button>
+      <div class="auth-switch">No account? <a onclick="showPage('page-signup')">Create one free</a></div>
+      <div class="auth-switch" style="margin-top:8px"><a onclick="showPage('page-landing')" style="color:var(--muted)">← Back to home</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- SIGNUP -->
+<div class="page" id="page-signup">
+  <div class="auth-left">
+    <div class="auth-brand"><span class="logo">FinSmart</span><p>Start your financial journey today</p></div>
+    <div class="auth-stats">
+      <div class="astat"><div class="num">Free</div><div class="lbl">Forever plan</div></div>
+      <div class="astat"><div class="num">5 min</div><div class="lbl">Setup time</div></div>
+      <div class="astat"><div class="num">AI</div><div class="lbl">Powered coach</div></div>
+      <div class="astat"><div class="num">100%</div><div class="lbl">Secure & private</div></div>
+    </div>
+  </div>
+  <div class="auth-right">
+    <div class="auth-form">
+      <h2>Create Account 🚀</h2>
+      <p class="sub">Join thousands of young people mastering money</p>
+      <div class="errmsg" id="sig-err">Please fill all required fields correctly.</div>
+      <div class="frow">
+        <div class="fg"><label>First Name</label><input type="text" id="s-fn" placeholder="Ravi"></div>
+        <div class="fg"><label>Last Name</label><input type="text" id="s-ln" placeholder="Kumar"></div>
+      </div>
+      <div class="fg"><label>Email Address</label><input type="email" id="s-em" placeholder="your@email.com"></div>
+      <div class="frow">
+        <div class="fg"><label>Age</label><input type="number" id="s-age" placeholder="18" min="13" max="30"></div>
+        <div class="fg"><label>Occupation</label>
+          <select id="s-occ"><option value="">Select...</option><option>School Student</option><option>College Student</option><option>Part-time Worker</option><option>First Job</option><option>Freelancer</option></select>
+        </div>
+      </div>
+      <div class="fg"><label>Monthly Income / Allowance (₹)</label><input type="number" id="s-inc" placeholder="15000"></div>
+      <div class="frow">
+        <div class="fg"><label>Password</label><input type="password" id="s-pw" placeholder="Min 6 characters"></div>
+        <div class="fg"><label>Confirm Password</label><input type="password" id="s-cpw" placeholder="Repeat"></div>
+      </div>
+      <button class="btn-auth" onclick="doSignup()">Create My Account</button>
+      <div class="auth-switch">Already registered? <a onclick="showPage('page-login')">Sign in</a></div>
+      <div class="auth-switch" style="margin-top:8px"><a onclick="showPage('page-landing')" style="color:var(--muted)">← Back to home</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="page" id="page-dashboard">
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-logo">FinSmart</div>
+      <nav class="tab-nav">
+        <button class="tab-btn active" onclick="showSection('sec-overview',this)">📊 Overview</button>
+        <button class="tab-btn" onclick="showSection('sec-transactions',this)">💸 Transactions</button>
+        <button class="tab-btn" onclick="showSection('sec-budget',this)">🎯 Budget</button>
+        <button class="tab-btn" onclick="showSection('sec-goals',this)">🏆 Goals</button>
+        <button class="tab-btn" onclick="showSection('sec-education',this)">📚 Learn</button>
+        <button class="tab-btn" onclick="showSection('sec-ai',this)">🤖 AI Coach</button>
+      </nav>
+    </div>
+    <div class="topbar-right">
+      <div style="text-align:right"><div class="uname" id="tb-name">User</div><div class="urole" id="tb-role">Student</div></div>
+      <div class="avatar" id="tb-av">U</div>
+      <button class="btn-logout" onclick="doLogout()">Sign Out</button>
+    </div>
+  </header>
+  <main class="dash-main">
+
+    <!-- OVERVIEW -->
+    <div class="section active" id="sec-overview">
+      <div class="sec-hdr"><h2 id="ov-greet">Good day! 👋</h2><p>Here's your financial snapshot for this month</p></div>
+      <div class="kpi-grid">
+        <div class="kpi"><div class="kpi-bar g"></div><div class="kpi-lbl">Monthly Income</div><div class="kpi-val" id="kpi-inc">₹0</div><div class="kpi-sub">This month</div><div class="kpi-ico">💰</div></div>
+        <div class="kpi"><div class="kpi-bar r"></div><div class="kpi-lbl">Total Expenses</div><div class="kpi-val" id="kpi-exp">₹0</div><div class="kpi-sub">Tracked spending</div><div class="kpi-ico">💸</div></div>
+        <div class="kpi"><div class="kpi-bar p"></div><div class="kpi-lbl">Predicted Savings</div><div class="kpi-val" id="kpi-sav">₹0</div><div class="kpi-sub">End of month</div><div class="kpi-ico">🔮</div></div>
+        <div class="kpi"><div class="kpi-bar a"></div><div class="kpi-lbl">Budget Health</div><div class="kpi-val" id="kpi-hlth">—</div><div class="kpi-sub">Savings rate</div><div class="kpi-ico">❤️</div></div>
+      </div>
+      <div class="grid32">
+        <div class="card">
+          <div class="card-title">Monthly Cash Flow <span>Last 6 months</span></div>
+          <div class="chart-bars" id="chart-bars"></div>
+          <div class="legend">
+            <div class="leg-i"><div class="leg-dot" style="background:var(--accent)"></div>Income</div>
+            <div class="leg-i"><div class="leg-dot" style="background:var(--danger)"></div>Expenses</div>
+            <div class="leg-i"><div class="leg-dot" style="background:var(--accent2)"></div>Savings</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Spending Breakdown</div>
+          <div class="donut-wrap">
+            <svg width="120" height="120" viewBox="0 0 42 42" id="donut-svg"><circle cx="21" cy="21" r="16" fill="transparent" stroke="#1e2f55" stroke-width="6"/></svg>
+            <div class="donut-labels" id="donut-lbls"><div style="color:var(--muted);font-size:.78rem">Add expenses to see breakdown</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <div class="card-title">Recent Transactions <span id="tx-cnt"></span></div>
+          <div id="ov-tx-list"></div>
+        </div>
+        <div>
+          <div class="predict-box">
+            <div class="predict-lbl">Estimated savings this month</div>
+            <div class="predict-amt" id="pred-amt">₹0</div>
+            <div class="predict-lbl" id="pred-tip">Add income &amp; expenses to see prediction</div>
+          </div>
+          <div class="card">
+            <div class="card-title">Budget Progress</div>
+            <div id="bgt-prog-ov"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRANSACTIONS -->
+    <div class="section" id="sec-transactions">
+      <div class="sec-hdr"><h2>💸 Transactions</h2><p>Log and track every rupee you earn or spend</p></div>
+      <div class="grid2">
+        <div class="card">
+          <div class="card-title">Add Transaction</div>
+          <div class="fgrp"><label class="flbl">Type</label><select class="sfield" id="tx-type"><option value="expense">Expense</option><option value="income">Income</option></select></div>
+          <div class="fgrp"><label class="flbl">Description</label><input class="ifield" id="tx-desc" placeholder="e.g. College canteen lunch"></div>
+          <div class="fgrp"><label class="flbl">Amount (₹)</label><input class="ifield" type="number" id="tx-amt" placeholder="0"></div>
+          <div class="fgrp"><label class="flbl">Category</label>
+            <select class="sfield" id="tx-cat">
+              <option>Food &amp; Dining</option><option>Transport</option><option>Education</option><option>Entertainment</option>
+              <option>Shopping</option><option>Health</option><option>Utilities</option><option>Savings</option>
+              <option>Salary / Allowance</option><option>Other</option>
+            </select>
+          </div>
+          <div class="fgrp"><label class="flbl">Date</label><input class="ifield" type="date" id="tx-date"></div>
+          <div style="display:flex;gap:9px;margin-top:14px">
+            <button class="btn-green" onclick="addTx()" style="flex:1">+ Add Transaction</button>
+            <button class="btn-grey" onclick="clearTxForm()">Clear</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">All Transactions <span id="all-tx-cnt"></span></div>
+          <div id="all-tx-list" style="max-height:400px;overflow-y:auto;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUDGET -->
+    <div class="section" id="sec-budget">
+      <div class="sec-hdr"><h2>🎯 Smart Budget Planner</h2><p>AI-suggested budget plan based on your income and spending habits</p></div>
+      <div class="grid2">
+        <div class="card">
+          <div class="card-title">Set Budget Limits</div>
+          <div id="bgt-form"></div>
+          <button class="btn-green" onclick="saveBudgets()" style="width:100%;margin-top:12px">💾 Save Budgets</button>
+        </div>
+        <div class="card">
+          <div class="card-title">Budget vs Actual</div>
+          <div id="bgt-status"></div>
+          <div style="margin-top:18px;padding:13px;background:rgba(0,229,170,.06);border:1px solid rgba(0,229,170,.18);border-radius:9px;">
+            <div style="font-size:.76rem;color:var(--muted);margin-bottom:4px">💡 AI Budget Tip</div>
+            <div id="ai-tip" style="font-size:.83rem;line-height:1.6">Add your transactions to receive a personalised budget tip.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GOALS -->
+    <div class="section" id="sec-goals">
+      <div class="sec-hdr"><h2>🏆 Savings Goals</h2><p>Set targets and watch your progress grow</p></div>
+      <div class="grid2">
+        <div class="card">
+          <div class="card-title">Add New Goal</div>
+          <div class="fgrp"><label class="flbl">Goal Name</label><input class="ifield" id="gl-name" placeholder="e.g. New Laptop"></div>
+          <div class="fgrp"><label class="flbl">Target Amount (₹)</label><input class="ifield" type="number" id="gl-target" placeholder="50000"></div>
+          <div class="fgrp"><label class="flbl">Already Saved (₹)</label><input class="ifield" type="number" id="gl-saved" placeholder="0"></div>
+          <div class="fgrp"><label class="flbl">Target Date</label><input class="ifield" type="date" id="gl-date"></div>
+          <button class="btn-green" onclick="addGoal()" style="width:100%;margin-top:8px">+ Add Goal</button>
+        </div>
+        <div id="goals-list"></div>
+      </div>
+    </div>
+
+    <!-- EDUCATION -->
+    <div class="section" id="sec-education">
+      <div class="sec-hdr"><h2>📚 Financial Education</h2><p>Build money knowledge with bite-sized tips and lessons</p></div>
+      <div class="qa-grid">
+        <button class="qa-btn" onclick="renderTips('all')"><div class="qa-icon">📖</div><div class="qa-lbl">All Tips</div></button>
+        <button class="qa-btn" onclick="renderTips('saving')"><div class="qa-icon">💰</div><div class="qa-lbl">Saving</div></button>
+        <button class="qa-btn" onclick="renderTips('investing')"><div class="qa-icon">📈</div><div class="qa-lbl">Investing</div></button>
+        <button class="qa-btn" onclick="renderTips('budgeting')"><div class="qa-icon">🎯</div><div class="qa-lbl">Budgeting</div></button>
+        <button class="qa-btn" onclick="renderTips('debt')"><div class="qa-icon">⚠️</div><div class="qa-lbl">Debt &amp; Credit</div></button>
+        <button class="qa-btn" onclick="renderTips('mindset')"><div class="qa-icon">🧠</div><div class="qa-lbl">Money Mindset</div></button>
+      </div>
+      <div id="tips-list"></div>
+    </div>
+
+    <!-- AI COACH -->
+    <div class="section" id="sec-ai">
+      <div class="sec-hdr"><h2>🤖 AI Financial Coach</h2><p>Ask me anything about money, budgeting, saving, or investing</p></div>
+      <div class="card">
+        <div class="chat-wrap">
+          <div class="chat-msgs" id="chat-msgs"></div>
+          <div class="chat-row">
+            <input class="chat-inp" id="chat-inp" placeholder="Ask your money question…" onkeydown="if(event.key==='Enter')sendChat()">
+            <button class="chat-send" onclick="sendChat()">➤</button>
+          </div>
+        </div>
+      </div>
+      <div class="qa-grid" style="margin-top:14px">
+        <button class="qa-btn" onclick="setChat('How should I save money as a student?')"><div class="qa-icon">🎓</div><div class="qa-lbl">Student Saving</div></button>
+        <button class="qa-btn" onclick="setChat('Explain the 50/30/20 budget rule')"><div class="qa-icon">📊</div><div class="qa-lbl">50/30/20 Rule</div></button>
+        <button class="qa-btn" onclick="setChat('What is an emergency fund and why do I need one?')"><div class="qa-icon">🛡️</div><div class="qa-lbl">Emergency Fund</div></button>
+        <button class="qa-btn" onclick="setChat('How do I start investing with small amounts?')"><div class="qa-icon">📈</div><div class="qa-lbl">Start Investing</div></button>
+        <button class="qa-btn" onclick="setChat('What are the best habits for financial success?')"><div class="qa-icon">🏆</div><div class="qa-lbl">Success Habits</div></button>
+        <button class="qa-btn" onclick="setChat('How to reduce unnecessary spending?')"><div class="qa-icon">✂️</div><div class="qa-lbl">Cut Expenses</div></button>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<div class="toast" id="toast"><span id="t-icon">✅</span><span id="t-msg">Done!</span></div>
+
+<script>
+// ── STATE ──
+let S = { user:null, transactions:[], budgets:{'Food & Dining':3000,'Transport':1500,'Education':2000,'Entertainment':1000,'Shopping':2000,'Health':500,'Utilities':800,'Other':500}, goals:[] };
+const SK = 'fs_state_';
+function save(){ if(S.user) localStorage.setItem(SK+S.user.email, JSON.stringify(S)); }
+function load(em){ const d=localStorage.getItem(SK+em); if(d) S=JSON.parse(d); }
+function getUsers(){ return JSON.parse(localStorage.getItem('fs_users')||'[]'); }
+function saveUsers(u){ localStorage.setItem('fs_users',JSON.stringify(u)); }
+
+// ── PAGES ──
+function showPage(id){ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+function showSection(id,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active')); if(btn) btn.classList.add('active');
+  if(id==='sec-overview') renderOverview();
+  if(id==='sec-transactions') renderAllTx();
+  if(id==='sec-budget') renderBudget();
+  if(id==='sec-goals') renderGoals();
+  if(id==='sec-education') renderTips('all');
+  if(id==='sec-ai') initChat();
+}
+
+// ── AUTH ──
+function doLogin(){
+  const em=document.getElementById('li-email').value.trim(), pw=document.getElementById('li-pass').value;
+  const err=document.getElementById('login-err'); err.classList.remove('show');
+  const u=getUsers().find(u=>u.email===em&&u.password===pw);
+  if(!u){err.classList.add('show');return;} loginUser(u);
+}
+function demoLogin(){
+  const demo={firstName:'Alex',lastName:'Demo',email:'demo@finsmart.in',occupation:'College Student',income:15000,password:'demo123'};
+  const users=getUsers(); if(!users.find(u=>u.email===demo.email)){users.push(demo);saveUsers(users);}
+  load(demo.email);
+  if(!S.user){ S={user:demo,transactions:demoTx(),budgets:S.budgets,goals:demoGoals()}; save(); }
+  loginUser(demo);
+}
+function doSignup(){
+  const fn=document.getElementById('s-fn').value.trim(), ln=document.getElementById('s-ln').value.trim();
+  const em=document.getElementById('s-em').value.trim(), age=document.getElementById('s-age').value;
+  const occ=document.getElementById('s-occ').value, inc=parseFloat(document.getElementById('s-inc').value)||0;
+  const pw=document.getElementById('s-pw').value, cpw=document.getElementById('s-cpw').value;
+  const err=document.getElementById('sig-err'); err.classList.remove('show');
+  if(!fn||!ln||!em||!occ||!pw){err.textContent='Please fill all required fields.';err.classList.add('show');return;}
+  if(pw!==cpw){err.textContent='Passwords do not match.';err.classList.add('show');return;}
+  if(pw.length<6){err.textContent='Password must be at least 6 characters.';err.classList.add('show');return;}
+  const users=getUsers();
+  if(users.find(u=>u.email===em)){err.textContent='Email already registered. Please sign in.';err.classList.add('show');return;}
+  const user={firstName:fn,lastName:ln,email:em,age,occupation:occ,income:inc,password:pw};
+  users.push(user); saveUsers(users);
+  S={user,transactions:[],budgets:S.budgets,goals:[]}; save();
+  showToast('🎉 Account created!'); setTimeout(()=>loginUser(user),700);
+}
+function loginUser(u){
+  S.user=u; load(u.email); S.user=u;
+  const init=(u.firstName[0]+u.lastName[0]).toUpperCase();
+  document.getElementById('tb-name').textContent=u.firstName+' '+u.lastName;
+  document.getElementById('tb-role').textContent=u.occupation||'';
+  document.getElementById('tb-av').textContent=init;
+  const h=new Date().getHours(), gr=h<12?'Good morning':h<17?'Good afternoon':'Good evening';
+  document.getElementById('ov-greet').textContent=gr+', '+u.firstName+'! 👋';
+  document.getElementById('tx-date').value=new Date().toISOString().split('T')[0];
+  showPage('page-dashboard'); renderOverview();
+}
+function doLogout(){ save(); S={user:null,transactions:[],budgets:{...S.budgets},goals:[]}; showPage('page-landing'); showToast('👋 Signed out'); }
+
+// ── ICONS/COLORS ──
+const ICOS={'Food & Dining':'🍜','Transport':'🚌','Education':'📚','Entertainment':'🎮','Shopping':'🛍️','Health':'💊','Utilities':'⚡','Savings':'💰','Salary / Allowance':'💵','Other':'📦'};
+const COLS={'Food & Dining':'#f59e0b','Transport':'#3b82f6','Education':'#8b5cf6','Entertainment':'#ec4899','Shopping':'#f43f5e','Health':'#10b981','Utilities':'#06b6d4','Savings':'#00e5aa','Salary / Allowance':'#22c55e','Other':'#94a3b8'};
+
+// ── TRANSACTIONS ──
+function addTx(){
+  const type=document.getElementById('tx-type').value, desc=document.getElementById('tx-desc').value.trim();
+  const amt=parseFloat(document.getElementById('tx-amt').value), cat=document.getElementById('tx-cat').value;
+  const date=document.getElementById('tx-date').value;
+  if(!desc||!amt||!date){showToast('⚠️ Fill all fields',true);return;}
+  S.transactions.unshift({id:Date.now(),type,desc,amount:amt,cat,date}); save();
+  clearTxForm(); renderAllTx(); renderOverview();
+  showToast('✅ '+(type==='income'?'Income':'Expense')+' added: ₹'+amt.toLocaleString('en-IN'));
+}
+function clearTxForm(){ document.getElementById('tx-desc').value=''; document.getElementById('tx-amt').value=''; }
+function delTx(id){ S.transactions=S.transactions.filter(t=>t.id!==id); save(); renderAllTx(); renderOverview(); showToast('🗑️ Deleted'); }
+function txHTML(t,del=false){
+  const ic=ICOS[t.cat]||'📦', col=COLS[t.cat]||'#94a3b8';
+  const a=(t.type==='income'?'+':'-')+'₹'+t.amount.toLocaleString('en-IN'), cls=t.type==='income'?'inc':'exp';
+  return `<div class="tx-item"><div class="tx-ico" style="background:${col}22;color:${col}">${ic}</div><div class="tx-info"><div class="tx-name">${t.desc}</div><div class="tx-cat">${t.cat} · ${t.date}</div></div><div><div class="tx-amt ${cls}">${a}</div>${del?`<div style="text-align:right;margin-top:3px"><button onclick="delTx(${t.id})" style="background:none;border:none;color:var(--muted);font-size:.72rem;cursor:pointer">✕ del</button></div>`:''}</div></div>`;
+}
+function renderAllTx(){
+  const el=document.getElementById('all-tx-list'), cnt=document.getElementById('all-tx-cnt');
+  if(!el) return; cnt.textContent=`(${S.transactions.length})`;
+  el.innerHTML=S.transactions.length?S.transactions.map(t=>txHTML(t,true)).join(''):'<div style="color:var(--muted);text-align:center;padding:28px;font-size:.86rem">No transactions yet. Add your first one!</div>';
+}
+
+// ── BUDGET ──
+const BCAT=['Food & Dining','Transport','Education','Entertainment','Shopping','Health','Utilities','Other'];
+function renderBudget(){
+  document.getElementById('bgt-form').innerHTML=BCAT.map(c=>`<div class="fgrp"><label class="flbl">${ICOS[c]||'📦'} ${c}</label><input class="ifield" type="number" id="bgt-${c.replace(/\W/g,'_')}" value="${S.budgets[c]||0}"></div>`).join('');
+  renderBudgetStatus();
+}
+function saveBudgets(){
+  BCAT.forEach(c=>{const el=document.getElementById('bgt-'+c.replace(/\W/g,'_'));if(el) S.budgets[c]=parseFloat(el.value)||0;});
+  save(); renderBudgetStatus(); showToast('💾 Budgets saved!');
+}
+function renderBudgetStatus(){
+  const el=document.getElementById('bgt-status'); if(!el) return;
+  const now=new Date(), spent={};
+  S.transactions.filter(t=>{const d=new Date(t.date);return t.type==='expense'&&d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();}).forEach(t=>{spent[t.cat]=(spent[t.cat]||0)+t.amount;});
+  let worst='',wRat=0;
+  el.innerHTML=BCAT.map(c=>{
+    const lim=S.budgets[c]||0, used=spent[c]||0, pct=lim?Math.min(100,(used/lim)*100):0, rat=lim?used/lim:0;
+    if(rat>wRat){wRat=rat;worst=c;}
+    const col=pct>90?'var(--danger)':pct>70?'var(--accent3)':'var(--accent)';
+    return `<div class="budget-item"><div class="bcat"><div class="bcat-name">${ICOS[c]||''} ${c}</div><div class="bcat-meta">₹${used.toLocaleString('en-IN')} of ₹${lim.toLocaleString('en-IN')}</div></div><div class="bprog-wrap"><div class="b-bar"><div class="b-fill" style="width:${pct}%;background:${col}"></div></div><div class="b-nums"><span>${pct.toFixed(0)}%</span><span class="badge ${pct>90?'r':pct>70?'a':'g'}">${pct>90?'Over budget':pct>70?'Near limit':'On track'}</span></div></div></div>`;
+  }).join('');
+  const tip=document.getElementById('ai-tip');
+  if(tip) tip.textContent=wRat>0.9?`⚠️ Your "${worst}" spending is near/over budget. Consider cutting it by ₹${Math.round((wRat-0.8)*(S.budgets[worst]||0))}.`:wRat>0.7?`👀 Watch your "${worst}" spend — ${(wRat*100).toFixed(0)}% used.`:`✅ Great job! You're on track across all budget categories!`;
+}
+
+// ── GOALS ──
+function addGoal(){
+  const name=document.getElementById('gl-name').value.trim(), target=parseFloat(document.getElementById('gl-target').value)||0;
+  const saved=parseFloat(document.getElementById('gl-saved').value)||0, date=document.getElementById('gl-date').value;
+  if(!name||!target){showToast('⚠️ Goal name and target required',true);return;}
+  S.goals.push({id:Date.now(),name,target,saved,date}); save(); renderGoals();
+  ['gl-name','gl-target','gl-saved'].forEach(id=>document.getElementById(id).value='');
+  showToast('🏆 Goal added!');
+}
+function delGoal(id){ S.goals=S.goals.filter(g=>g.id!==id); save(); renderGoals(); }
+function addToGoal(id){
+  const a=parseFloat(prompt('How much to add? (₹)')||'0');
+  if(!a||a<=0) return;
+  const g=S.goals.find(g=>g.id===id); if(g){g.saved=Math.min(g.target,g.saved+a);save();renderGoals();showToast(`✅ Added ₹${a} to "${g.name}"`);}
+}
+function renderGoals(){
+  const el=document.getElementById('goals-list'); if(!el) return;
+  el.innerHTML=S.goals.length?S.goals.map(g=>{
+    const pct=Math.round((g.saved/g.target)*100);
+    return `<div class="goal-card"><div class="goal-hdr"><div class="goal-name">🎯 ${g.name}</div><div class="goal-pct">${pct}%</div></div><div class="goal-bar"><div class="goal-fill" style="width:${pct}%"></div></div><div class="goal-meta"><span>₹${g.saved.toLocaleString('en-IN')} saved</span><span>₹${(g.target-g.saved).toLocaleString('en-IN')} to go</span>${g.date?`<span>📅 ${g.date}</span>`:''}</div><div style="display:flex;gap:7px;margin-top:10px"><button class="btn-green" onclick="addToGoal(${g.id})" style="flex:1;padding:8px;font-size:.8rem">+ Add Savings</button><button class="btn-grey" onclick="delGoal(${g.id})" style="padding:8px;font-size:.8rem">Delete</button></div></div>`;
+  }).join(''):'<div class="card" style="text-align:center;color:var(--muted);padding:38px">No goals yet. Add your first savings goal! 🎯</div>';
+}
+
+// ── OVERVIEW ──
+function renderOverview(){
+  const now=new Date(), inc=S.user?.income||0;
+  const mt=S.transactions.filter(t=>{const d=new Date(t.date);return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();});
+  const totInc=inc+mt.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0);
+  const totExp=mt.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
+  const sav=totInc-totExp, hlth=totInc>0?Math.max(0,Math.round((sav/totInc)*100)):0;
+  document.getElementById('kpi-inc').textContent='₹'+totInc.toLocaleString('en-IN');
+  document.getElementById('kpi-exp').textContent='₹'+totExp.toLocaleString('en-IN');
+  document.getElementById('kpi-sav').textContent='₹'+Math.max(0,sav).toLocaleString('en-IN');
+  document.getElementById('kpi-hlth').textContent=hlth+'%';
+  document.getElementById('pred-amt').textContent='₹'+Math.max(0,sav).toLocaleString('en-IN');
+  document.getElementById('pred-tip').textContent=sav<0?'⚠️ You are overspending. Review your budget!':hlth>30?`🎉 Excellent! Saving ${hlth}% of income.`:hlth>15?`👍 Good rate. Try to reach 20% savings.`:'💡 Aim to save at least 20% of your income.';
+  renderBarChart(inc); renderDonut(mt);
+  const ov=document.getElementById('ov-tx-list'), rec=S.transactions.slice(0,5);
+  document.getElementById('tx-cnt').textContent=`(${rec.length})`;
+  ov.innerHTML=rec.length?rec.map(t=>txHTML(t)).join(''):'<div style="color:var(--muted);text-align:center;padding:20px;font-size:.85rem">No transactions yet</div>';
+  renderBudgetProgOv(mt);
+}
+function renderBarChart(baseInc){
+  const el=document.getElementById('chart-bars'); if(!el) return;
+  const months=['Aug','Sep','Oct','Nov','Dec','Jan'];
+  const data=months.map(m=>{const i=Math.round(baseInc*(0.9+Math.random()*.2)),e=Math.round(i*(0.4+Math.random()*.3));return{m,i,e,s:Math.max(0,i-e)};});
+  const mx=Math.max(...data.map(d=>d.i));
+  el.innerHTML=data.map(d=>`<div class="bar-wrap"><div style="display:flex;gap:3px;align-items:flex-end;height:138px"><div class="bar-col inc" style="height:${(d.i/mx)*128}px;width:16px" title="₹${d.i}"></div><div class="bar-col exp" style="height:${(d.e/mx)*128}px;width:16px" title="₹${d.e}"></div><div class="bar-col sav" style="height:${(d.s/mx)*128}px;width:16px" title="₹${d.s}"></div></div><div class="bar-lbl">${d.m}</div></div>`).join('');
+}
+function renderDonut(txs){
+  const svg=document.getElementById('donut-svg'), lbls=document.getElementById('donut-lbls'); if(!svg||!lbls) return;
+  const ct={};txs.filter(t=>t.type==='expense').forEach(t=>{ct[t.cat]=(ct[t.cat]||0)+t.amount;});
+  const tot=Object.values(ct).reduce((s,v)=>s+v,0);
+  if(!tot){svg.innerHTML='<circle cx="21" cy="21" r="16" fill="transparent" stroke="#1e2f55" stroke-width="6"/>';lbls.innerHTML='<div style="color:var(--muted);font-size:.78rem">Add expenses to see breakdown</div>';return;}
+  const entries=Object.entries(ct).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  let circles='<circle cx="21" cy="21" r="16" fill="transparent" stroke="#0d1530" stroke-width="6"/>',off=25,circ=100.53;
+  entries.forEach(([c,v])=>{const pct=v/tot,dash=pct*circ,col=COLS[c]||'#94a3b8';circles+=`<circle cx="21" cy="21" r="16" fill="transparent" stroke="${col}" stroke-width="6" stroke-dasharray="${dash} ${circ-dash}" stroke-dashoffset="${-off}"/>`;off=(off-dash+circ)%circ;});
+  svg.innerHTML=circles;
+  lbls.innerHTML=entries.map(([c,v])=>`<div class="donut-item"><div class="donut-il"><div class="donut-dot" style="background:${COLS[c]||'#94a3b8'}"></div><span style="color:var(--muted)">${c.split(' ')[0]}</span></div><span style="font-weight:700">${((v/tot)*100).toFixed(0)}%</span></div>`).join('');
+}
+function renderBudgetProgOv(txs){
+  const el=document.getElementById('bgt-prog-ov'); if(!el) return;
+  const spent={};txs.filter(t=>t.type==='expense').forEach(t=>{spent[t.cat]=(spent[t.cat]||0)+t.amount;});
+  el.innerHTML=Object.keys(S.budgets).slice(0,4).map(c=>{
+    const lim=S.budgets[c]||1,used=spent[c]||0,pct=Math.min(100,(used/lim)*100);
+    const col=pct>90?'var(--danger)':pct>70?'var(--accent3)':'var(--accent)';
+    return `<div class="prog-item"><div class="prog-hdr"><span style="font-size:.79rem">${ICOS[c]||'📦'} ${c}</span><span style="font-size:.75rem;color:var(--muted)">${pct.toFixed(0)}%</span></div><div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:${col}"></div></div></div>`;
+  }).join('');
+}
+
+// ── TIPS ──
+const TIPS=[
+  {cat:'saving',icon:'💰',title:'Pay Yourself First',text:'Before spending on anything else, set aside at least 10–20% of your income as savings. Automate it so you never miss it.',tag:'SAVING STRATEGY'},
+  {cat:'budgeting',icon:'📊',title:'The 50/30/20 Rule',text:'Allocate 50% to needs (food, rent), 30% to wants (entertainment), and 20% to savings and investments. Perfect for beginners!',tag:'BUDGETING'},
+  {cat:'investing',icon:'📈',title:'Start Investing Early',text:'Time is your greatest asset. ₹1,000 invested at 18 with 12% annual return becomes ₹87,000+ by age 40. Start a SIP today.',tag:'INVESTING'},
+  {cat:'mindset',icon:'🧠',title:'Needs vs Wants',text:'A need is essential — food, shelter, education. A want is desirable but not essential. Always fund needs first, then wants.',tag:'MONEY MINDSET'},
+  {cat:'debt',icon:'⚠️',title:'Avoid Bad Debt',text:'Credit card debt at 24–36% annual interest is wealth-destroying. Only borrow for assets that grow in value (education, property).',tag:'DEBT & CREDIT'},
+  {cat:'saving',icon:'🎯',title:'Set SMART Goals',text:'Specific, Measurable, Achievable, Realistic, Time-bound. Say "save ₹20,000 for a laptop by December" — then plan backward.',tag:'GOAL SETTING'},
+  {cat:'investing',icon:'🏦',title:'Emergency Fund First',text:'Build 3–6 months of expenses in a savings account before investing. This prevents debt during unexpected situations.',tag:'EMERGENCY FUND'},
+  {cat:'budgeting',icon:'📱',title:'Track Every Expense',text:'People who track spending save 15–20% more. Log even small purchases — chai and bus tickets add up fast!',tag:'HABIT'},
+  {cat:'mindset',icon:'🚫',title:'Avoid Lifestyle Inflation',text:'When income increases, keep costs stable and redirect raises into savings and investments. Don\'t upgrade everything at once.',tag:'MONEY MINDSET'},
+  {cat:'investing',icon:'🔁',title:'Power of Compounding',text:'₹5,000/month in a mutual fund at 12% return = ₹1 Crore in 25 years. Start now, even with small amounts.',tag:'INVESTING'},
+  {cat:'debt',icon:'💳',title:'Build Credit Wisely',text:'Pay your full credit card balance monthly, never miss a payment, and stay under 30% utilisation to build a strong CIBIL score.',tag:'CREDIT'},
+  {cat:'saving',icon:'🛒',title:'The 24-Hour Rule',text:'Before any non-essential purchase over ₹500, wait 24 hours. This eliminates impulse buying and saves thousands annually.',tag:'SAVING HACK'},
+];
+function renderTips(cat){
+  const el=document.getElementById('tips-list'); if(!el) return;
+  const ft=cat==='all'?TIPS:TIPS.filter(t=>t.cat===cat);
+  el.innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">${ft.map(t=>`<div class="tip-card"><div class="tip-icon">${t.icon}</div><div class="tip-title">${t.title}</div><div class="tip-text">${t.text}</div><span class="tip-tag">${t.tag}</span></div>`).join('')}</div>`;
+}
+
+// ── AI CHAT ──
+let chatHistory=[], chatInit=false;
+function initChat(){
+  if(chatInit) return; chatInit=true; chatHistory=[];
+  document.getElementById('chat-msgs').innerHTML='';
+  addBot('👋 Hi! I\'m your AI Financial Coach. Ask me anything about saving, budgeting, investing, or building smart money habits!');
+}
+function setChat(txt){ showSection('sec-ai',document.querySelectorAll('.tab-btn')[5]); document.getElementById('chat-inp').value=txt; sendChat(); }
+async function sendChat(){
+  const inp=document.getElementById('chat-inp'), msg=inp.value.trim(); if(!msg) return;
+  inp.value=''; addUser(msg); chatHistory.push({role:'user',content:msg});
+  const tid=addTyping();
+  const sys=`You are FinSmart AI Coach, a friendly financial literacy assistant for youth in India.
+User: ${S.user?`${S.user.firstName}, ${S.user.age||'young adult'} yrs, ${S.user.occupation}, Income ₹${S.user.income}/month`:'Young person in India'}
+Keep responses concise (3–5 sentences), actionable, use Indian context (₹, SIP, FD, CIBIL), be encouraging, use occasional emojis.`;
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:sys,messages:chatHistory})});
+    const d=await r.json(); removeTyping(tid);
+    const reply=d.content?.[0]?.text||'I had trouble. Please try again!';
+    chatHistory.push({role:'assistant',content:reply}); addBot(reply);
+  }catch(e){
+    removeTyping(tid);
+    const fb=fallback(msg); chatHistory.push({role:'assistant',content:fb}); addBot(fb);
+  }
+}
+function fallback(m){
+  m=m.toLowerCase();
+  if(m.includes('save')||m.includes('saving')) return '💰 Pay yourself first! Set aside 20% of your income before any spending. Even ₹500/month in a SIP grows significantly over time. Start small, stay consistent!';
+  if(m.includes('budget')) return '📊 Try the 50/30/20 rule: 50% for needs, 30% for wants, 20% for savings/investments. Track every expense in FinSmart to see where your money really goes!';
+  if(m.includes('invest')) return '📈 For young investors in India, SIPs in mutual funds are a great start. Begin with ₹500/month. Consistency and starting early are your biggest advantages!';
+  if(m.includes('emergency')) return '🛡️ An emergency fund should cover 3–6 months of expenses in a liquid savings account. Build this before you start investing — it is your financial safety net!';
+  return '🤖 Great question! The basics of financial success: track spending, budget carefully, save consistently, invest early, and avoid bad debt. Each small step builds lasting wealth. What specific topic interests you?';
+}
+function addBot(t){const m=document.getElementById('chat-msgs');const d=document.createElement('div');d.className='bubble bot';d.textContent=t;m.appendChild(d);m.scrollTop=m.scrollHeight;}
+function addUser(t){const m=document.getElementById('chat-msgs');const d=document.createElement('div');d.className='bubble user';d.textContent=t;m.appendChild(d);m.scrollTop=m.scrollHeight;}
+function addTyping(){const m=document.getElementById('chat-msgs');const id='ty'+Date.now();const d=document.createElement('div');d.className='bubble typing';d.id=id;d.innerHTML='<span style="color:var(--muted);font-size:.78rem">✦ FinSmart AI is thinking…</span>';m.appendChild(d);m.scrollTop=m.scrollHeight;return id;}
+function removeTyping(id){const el=document.getElementById(id);if(el)el.remove();}
+
+// ── TOAST ──
+let toastT;
+function showToast(msg,err=false){
+  const t=document.getElementById('toast');
+  document.getElementById('t-msg').textContent=msg;
+  t.style.borderColor=err?'var(--danger)':'var(--accent)';
+  t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// ── DEMO DATA ──
+function demoTx(){const m=new Date().toISOString().slice(0,7);return[
+  {id:1,type:'income',desc:'Part-time internship',amount:8000,cat:'Salary / Allowance',date:`${m}-01`},
+  {id:2,type:'expense',desc:'Monthly groceries',amount:2200,cat:'Food & Dining',date:`${m}-02`},
+  {id:3,type:'expense',desc:'Bus pass',amount:450,cat:'Transport',date:`${m}-03`},
+  {id:4,type:'expense',desc:'College textbooks',amount:1200,cat:'Education',date:`${m}-04`},
+  {id:5,type:'expense',desc:'Movie with friends',amount:600,cat:'Entertainment',date:`${m}-06`},
+  {id:6,type:'expense',desc:'Mobile recharge',amount:299,cat:'Utilities',date:`${m}-07`},
+  {id:7,type:'expense',desc:'Canteen lunch x10',amount:800,cat:'Food & Dining',date:`${m}-09`},
+  {id:8,type:'expense',desc:'New sneakers',amount:1800,cat:'Shopping',date:`${m}-11`},
+  {id:9,type:'income',desc:'Freelance design work',amount:3500,cat:'Salary / Allowance',date:`${m}-12`},
+  {id:10,type:'expense',desc:'Gym membership',amount:600,cat:'Health',date:`${m}-13`},
+];}
+function demoGoals(){return[
+  {id:1,name:'New Laptop',target:55000,saved:22000,date:'2025-06-30'},
+  {id:2,name:'Emergency Fund',target:30000,saved:12500,date:'2025-12-31'},
+  {id:3,name:'Trip to Goa',target:15000,saved:5000,date:'2025-04-15'},
+];}
+
+// INIT
+document.getElementById('tx-date').value=new Date().toISOString().split('T')[0];
+document.getElementById('gl-date').value=new Date(Date.now()+90*864e5).toISOString().split('T')[0];
+</script>
+</body>
+</html>
